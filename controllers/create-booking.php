@@ -1,48 +1,47 @@
 <?php
 include('db.php');
-$database = new Database();
-$conn = $database->getConnection();
 
-if (count($_POST) > 0) {
-    if ($_POST['type'] == 1) {
+// Check if a file is uploaded
+if (isset($_FILES['upload_id']) && $_FILES['upload_id']['error'] == 0) {
+    // Define the directory where files will be saved
+    $target_dir = "uploads/"; // Make sure the 'uploads/' directory exists and is writable
+
+    // Get the file extension
+    $file_extension = pathinfo($_FILES['upload_id']['name'], PATHINFO_EXTENSION);
+
+    // Generate a unique filename
+    $file_name = uniqid() . '.' . $file_extension;
+
+    // Set the full file path
+    $target_file = $target_dir . $file_name;
+
+    // Move the uploaded file to the target directory
+    if (move_uploaded_file($_FILES['upload_id']['tmp_name'], $target_file)) {
+        // File uploaded successfully, save the file name in the database
+
+        // Prepare your booking insertion query
         $schedule_id = $_POST['schedule_id'];
         $passenger_id = $_POST['passenger_id'];
-        $passenger_email = $_POST['passenger_email'];
         $seat_num = $_POST['seat_num'];
-        $payment_status = "pending";
         $total = $_POST['total'];
-        $routeName = $_POST['routeName'];
-        $book_reference = $routeName . "_00" . $schedule_id . "00" . $seat_num;
-
-        // Get passenger type
         $passenger_type = $_POST['passenger_type'];
+        $routeName = $_POST['routeName'];
+        
+        // Use prepared statements to insert into the database
+        $stmt = $db->prepare("INSERT INTO tblbook (schedule_id, passenger_id, seat_num, total, passenger_type, upload_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $schedule_id, $passenger_id, $seat_num, $total, $passenger_type, $file_name);
 
-        // Initialize upload_id variable
-        $upload_id_name = null;
-
-        // Check if there's an uploaded file
-        if (isset($_FILES['upload_id']) && $_FILES['upload_id']['error'] == 0) {
-            $upload_id = $_FILES['upload_id'];
-            $upload_id_name = uniqid() . '_' . basename($upload_id['name']); // Create a unique filename
-            $upload_id_path = 'uploads/' . $upload_id_name; // Specify your upload directory
-
-            // Move the uploaded file to the desired directory
-            if (!move_uploaded_file($upload_id['tmp_name'], $upload_id_path)) {
-                echo json_encode(array("statusCode" => 500, "message" => "Error uploading the file."));
-                exit;
-            }
-        }
-
-        // Update SQL query to include upload_id_name instead of upload_id
-        $sql = "INSERT INTO `tblbooks` (`schedule_id`, `passenger_id`, `seat_num`, `payment_status`, `total`, `book_reference`, `passenger_type`, `upload_id`) 
-                VALUES ('$schedule_id', '$passenger_id', '$seat_num', '$payment_status', '$total', '$book_reference', '$passenger_type', '$upload_id_name')";
-
-        if (mysqli_query($conn, $sql)) {
-            echo json_encode(array("statusCode" => 201));
+        if ($stmt->execute()) {
+            echo json_encode(["success" => true, "message" => "Booking created successfully!"]);
         } else {
-            echo json_encode(array("statusCode" => 500, "message" => "Error: " . mysqli_error($conn)));
+            echo json_encode(["success" => false, "message" => "Error creating booking."]);
         }
-        mysqli_close($conn);
+    } else {
+        // File upload failed
+        echo json_encode(["success" => false, "message" => "Error uploading file."]);
     }
+} else {
+    // No file uploaded, handle accordingly
+    echo json_encode(["success" => false, "message" => "No ID proof uploaded."]);
 }
 ?>

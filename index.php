@@ -2,7 +2,12 @@
     include('includes/layout-header.php');
     include('controllers/db.php');
     include('controllers/location.php');
+?>
 
+<!-- Add the icon link here -->
+<link rel="icon" href="../assets/img/bus.ico" type="image/ico">
+
+<?php 
     // Sanitize input function
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));

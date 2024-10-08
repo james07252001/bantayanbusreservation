@@ -136,10 +136,6 @@
                                 <span class="font-weight-bold"><?php echo $row['book_reference'] ?></span>
                             </p>
                             <p class="mb-0 d-flex align-items-center justify-content-between">
-                                <span class="text-muted">Upload ID:</span>
-                                <span class="font-weight-bold"><?php echo $row['upload_id'] ?></span>
-                            </p>
-                            <p class="mb-0 d-flex align-items-center justify-content-between">
                                 <span class="text-muted">Passenger Type:</span>
                                 <span class="font-weight-bold"><?php echo $row['passenger_type'] ?></span>
                             </p>

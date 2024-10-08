@@ -40,8 +40,9 @@
 ?>
 
 <main >
-    <div class="container mt-5" >
+<div class="container mt-5">
         <?php
+            // Error and success messages
             if(isset($_GET['error']) && !empty($_GET['error'])){
                 if($_GET['error'] == 'stmtfailed'){
                     echo '<div class="alert alert-danger" role="alert">
@@ -59,18 +60,18 @@
             }
         ?>
 
-        <ul class="nav nav-tabs bg-white sm" id="myTab" role="tablist" >
-            <li class="nav-item" style="background-image: linear-gradient( 109.6deg,  rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1% );">
-                <a class="nav-link active" id="booking-tab" data-toggle="tab" href="#booking" role="tab" aria-controls="booking" aria-selected="true"><b>My Booking</a></b>
+        <ul class="nav nav-tabs bg-white sm" id="myTab" role="tablist">
+            <li class="nav-item" style="background-image: linear-gradient(109.6deg, rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1%);">
+                <a class="nav-link active" id="booking-tab" data-toggle="tab" href="#booking" role="tab" aria-controls="booking" aria-selected="true"><b>My Booking</b></a>
             </li>
-            <li class="nav-item" style="background-image: linear-gradient( 109.6deg,  rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1% );">
-                <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><b>Account Settings</a></b>
+            <li class="nav-item" style="background-image: linear-gradient(109.6deg, rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1%);">
+                <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><b>Account Settings</b></a>
             </li>
         </ul>
 
-        <div class="tab-content" id="myTabContent" >
-            <div class="tab-pane fade bg-white p-3 border-right border-left border-bottom show active" id="booking" role="tabpanel" aria-labelledby="booking-tab" >
-                <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-image: linear-gradient( 109.6deg,  rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1% );">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade bg-white p-3 border-right border-left border-bottom show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
+                <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-image: linear-gradient(109.6deg, rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1%);">
                     <li class="nav-item">
                         <a class="nav-link active" id="Pending-tab" data-toggle="tab" href="#Pending" role="tab" aria-controls="Pending" aria-selected="true">Pending</a>
                     </li>
@@ -410,34 +411,40 @@
 </div>
 
 
-            <div class="tab-pane fade bg-white p-3 border-right border-left border-bottom" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                <form method="POST" action="" style="margin-top: -1700px;">
-                    <div class="form-row mb-3">
-                     <div class="col-md-6">
-                            <label for="first_name"><b>First Name</label></b>
-                            <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $passenger['first_name'] ?>" required />
-                        </div>
-                        <div class="col-md-6">
-                            <label for="last_name"><b>Last Name</label></b>
-                            <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $passenger['last_name'] ?>" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="address"><b>Address</label></b>
-                        <input type="text" class="form-control" id="address" name="address" value="<?php echo $passenger['address'] ?>" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="email"><b>Email address</label></b>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $passenger['email'] ?>" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="password"><b>Password</label></b>
-                        <input type="password" class="form-control" id="password" name="password" />
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" name="update-passenger-submit"><b>Update</button></b>
-                </form>
+<div class="tab-pane fade bg-white p-3 border-right border-left border-bottom" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+    <form method="POST" action="" onsubmit="return validateForm()">
+        <div class="form-row mb-3">
+            <div class="col-md-6">
+                <label for="first_name"><b>First Name</b></label>
+                <input type="text" class="form-control" id="first_name" name="first_name" 
+                       value="<?php echo htmlspecialchars($passenger['first_name']) ?>" 
+                       required pattern="[A-Za-z]+" title="Only letters are allowed." />
             </div>
+            <div class="col-md-6">
+                <label for="last_name"><b>Last Name</b></label>
+                <input type="text" class="form-control" id="last_name" name="last_name" 
+                       value="<?php echo htmlspecialchars($passenger['last_name']) ?>" 
+                       required pattern="[A-Za-z]+" title="Only letters are allowed." />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address"><b>Address</b></label>
+            <input type="text" class="form-control" id="address" name="address" 
+                   value="<?php echo htmlspecialchars($passenger['address']) ?>" required />
+        </div>
+        <div class="form-group">
+            <label for="email"><b>Email address</b></label>
+            <input type="email" class="form-control" id="email" name="email" 
+                   value="<?php echo htmlspecialchars($passenger['email']) ?>" required />
+        </div>
+        <div class="form-group">
+            <label for="password"><b>Password</b></label>
+            <input type="password" class="form-control" id="password" name="password" />
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="update-passenger-submit"><b>Update</b></button>
+    </form>
+</div>
         </div>
     </div>
 </main>
@@ -480,6 +487,30 @@
 
 </script>
 
+<script>
+function validateForm() {
+    var firstName = document.getElementById('first_name').value;
+    var lastName = document.getElementById('last_name').value;
+
+    // Regex to match only letters
+    var regex = /^[A-Za-z]+$/;
+
+    if (!regex.test(firstName)) {
+        alert("First name can only contain letters.");
+        return false;
+    }
+
+    if (!regex.test(lastName)) {
+        alert("Last name can only contain letters.");
+        return false;
+    }
+
+    return true;
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 
 <?php include('includes/scripts.php')?>

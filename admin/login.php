@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,9 +31,8 @@
 
     <title>Bantayan Online Bus Reservation System</title>
 
-
   </head>
-  <body class="bg-light" >
+  <body class="bg-light">
 
   <!-- Just an image -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" style="background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);">
@@ -59,12 +58,10 @@
   </div>
   </div>
 </nav>
-    <div style="width: 100vw; height: 80vh" class="bg-light" >
-        <div class="h-100 d-flex flex-column justify-content-center align-items-center" style="background-color: #FFDEE9;
-background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
-">
+    <div style="width: 100vw; height: 80vh" class="bg-light">
+        <div class="h-100 d-flex flex-column justify-content-center align-items-center" style="background-color: #FFDEE9; background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);">
             <div class="container">
-                <div class="w-100 m-auto" style="max-width: 500px; ">
+                <div class="w-100 m-auto" style="max-width: 500px;">
                     <div class="bg-white rounded shadow p-3" style="background: #ADA996; background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);">
                         <div class="text-center mb-5">
                             <img class="img-fluid" alt="login" src="../assets/images/bobrs3.png" style=" width: 300px" />
@@ -76,7 +73,7 @@ background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
                         <?php
                             if(isset($_GET["newpwd"])){
                                 if($_GET["newpwd"] == "passwordUpdated"){
-                                    ?>
+                        ?>
                         <div class="alert alert-success" role="alert">
                             Password updated successfully.
                         </div>
@@ -89,19 +86,20 @@ background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
                             <input type="hidden" value="3" name="type">
 
                             <div class="form mb-3">
-                                <input type="email" class="form__input" id="email" name="email" style="border-color: black" placeholder=" "
-                                    required />
+                                <input type="email" class="form__input" id="email" name="email" style="border-color: black" placeholder=" " required />
                                 <label for="email" class="form__label" style="font-family: 'Times New Roman', serif; background-color: #F2F2F2">Email address</label>
                             </div>
+                            
+                            <!-- Password Field with Eye Icon -->
                             <div class="mb-3">
-                                <div class="form">
-                                    <input type="password" class="form__input" id="password" name="password" style="border-color: black"
-                                        placeholder=" " required />
+                                <div class="form position-relative">
+                                    <input type="password" class="form__input" id="password" name="password" style="border-color: black" placeholder=" " required />
                                     <label for="password" class="form__label" style="font-family: 'Times New Roman', serif; text-size: 20px; background-color: #F2F2F2">Password</label>
+                                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></span>
                                 </div>
                                 <a href="reset-password.php" style="font-family: 'Times New Roman', serif; text-size: 20px; background-color: #F2F2F2">Forgot password?</a>
                             </div>
-                            <button type="submit" class="btn btn-block btn-primary" style="font-family: 'Times New Roman', serif; text-size: 20px;" >LOGIN</button>
+                            <button type="submit" class="btn btn-block btn-primary" style="font-family: 'Times New Roman', serif; text-size: 20px;">LOGIN</button>
                         </form>
                     </div>
                 </div>
@@ -113,27 +111,38 @@ background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/jquery.dataTables.min.js"></script>
 
+    <!-- Script to toggle password visibility -->
     <script>
-    $("#login_form").submit(function(event) {
-        event.preventDefault();
-        var data = $("#login_form").serialize();
-        console.log(data)
-
-        $.ajax({
-            data: data,
-            type: "post",
-            url: "backend/user.php",
-            success: function(dataResult) {
-                var dataResult = JSON.parse(dataResult);
-                if (dataResult.statusCode == 200) {
-                    alert("Login successfully!");
-                    window.location.replace("index.php")
-                } else {
-                    alert(dataResult.title);
-                }
-            },
+        $(document).on('click', '.toggle-password', function() {
+            $(this).toggleClass('fa-eye fa-eye-slash');
+            var input = $($(this).attr("toggle"));
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
         });
-    });
+
+        $("#login_form").submit(function(event) {
+            event.preventDefault();
+            var data = $("#login_form").serialize();
+            console.log(data);
+
+            $.ajax({
+                data: data,
+                type: "post",
+                url: "backend/user.php",
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        alert("Login successfully!");
+                        window.location.replace("index.php");
+                    } else {
+                        alert(dataResult.title);
+                    }
+                }
+            });
+        });
     </script>
 </body>
 

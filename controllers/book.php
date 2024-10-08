@@ -2,7 +2,7 @@
 class Book
 {
     private $conn;
-    private $table_name = "tblbooks";
+    private $table_name = "tblbook";
 
     // Database Connection 
     public function __construct($db)
@@ -12,34 +12,34 @@ class Book
 
     public function checkSeat($schedule_id, $seat_num)
     {
-        $query = "SELECT * FROM ".$this->table_name." WHERE schedule_id = '$schedule_id' AND seat_num = '$seat_num'";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE schedule_id = '$schedule_id' AND seat_num = '$seat_num'";
         $result = $this->conn->query($query);
         $data = $result->fetch_assoc();
         return $data;
     }
 
-    public function create($schedule_id, $passenger_id, $seat_num, $payment_status='pending', $total, $passenger_type, $upload_id) {
-        // Updated SQL to include upload_id
-        $sql = "INSERT INTO ".$this->table_name." (schedule_id, passenger_id, seat_num, payment_status, total, passenger_type, upload_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public function create($schedule_id, $passenger_id, $seat_num, $payment_status = 'pending', $total, $passenger_type) {
+        // Updated SQL to exclude upload_id
+        $sql = "INSERT INTO " . $this->table_name . " (schedule_id, passenger_id, seat_num, payment_status, total, passenger_type) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_stmt_init($this->conn);
-        if(!mysqli_stmt_prepare($stmt, $sql)){
-            header("location: booked.php?schedule_id=".$schedule_id."&error=stmtfailed");
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: booked.php?schedule_id=" . $schedule_id . "&error=stmtfailed");
             exit();
         }
-    
-        // Updated parameter binding to include upload_id
-        mysqli_stmt_bind_param($stmt, "sssssss", $schedule_id, $passenger_id, $seat_num, $payment_status, $total, $passenger_type, $upload_id);
+
+        // Updated parameter binding to exclude upload_id
+        mysqli_stmt_bind_param($stmt, "ssssss", $schedule_id, $passenger_id, $seat_num, $payment_status, $total, $passenger_type);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         
-        echo json_encode(array("statusCode"=>201));
-        header("location: booked.php?schedule_id=".$schedule_id."&success=book");
+        echo json_encode(array("statusCode" => 201));
+        header("location: booked.php?schedule_id=" . $schedule_id . "&success=book");
         exit();
     }
 
     public function getPassengersBooking($passenger_id)
     {
-        $query = "SELECT *, b.id as book_id FROM ".$this->table_name." b INNER JOIN tblschedule s ON b.schedule_id = s.id INNER JOIN tblroute r ON s.route_id = r.id WHERE passenger_id = '$passenger_id' ORDER BY book_date DESC";
+        $query = "SELECT *, b.id as book_id FROM " . $this->table_name . " b INNER JOIN tblschedule s ON b.schedule_id = s.id INNER JOIN tblroute r ON s.route_id = r.id WHERE passenger_id = '$passenger_id' ORDER BY book_date DESC";
         $result = $this->conn->query($query);
         
         $data = array();
@@ -51,7 +51,7 @@ class Book
 
     public function getAll()
     {
-        $query = "SELECT *, b.id as book_id FROM ".$this->table_name." b INNER JOIN tblschedule s ON b.schedule_id = s.id INNER JOIN tblroute r ON s.route_id = r.id ORDER BY book_date DESC";
+        $query = "SELECT *, b.id as book_id FROM " . $this->table_name . " b INNER JOIN tblschedule s ON b.schedule_id = s.id INNER JOIN tblroute r ON s.route_id = r.id ORDER BY book_date DESC";
         $result = $this->conn->query($query);
         
         $data = array();

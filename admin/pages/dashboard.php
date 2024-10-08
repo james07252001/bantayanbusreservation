@@ -49,7 +49,7 @@
     <div class="row">
         <!-- Total Bookings -->
 <div class="col-6 col-sm-4 col-md-3 mb-3">
-    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF;background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);">
         <div class="d-flex align-items-center">
             <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="50px" viewBox="0 0 24 24" width="50px" fill="#000000">
                 <rect fill="none" height="50" width="50" />
@@ -59,7 +59,7 @@
                 <p class="mb-0" style="font-family: 'Times New Roman', serif;"><b>TOTAL BOOKINGS</b></p>
                 <h1>
                     <?php
-                    $q = mysqli_query($conn,"SELECT * from tblbooks");
+                    $q = mysqli_query($conn,"SELECT * from tblbook");
                     $num_rows = mysqli_num_rows($q);
                     echo $num_rows;
                     ?>
@@ -71,7 +71,7 @@
 
 <!-- Total Passengers -->
 <div class="col-6 col-sm-4 col-md-3 mb-3">
-        <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+        <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF; background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);">
             <div class="d-flex align-items-center">
                 <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 0 24 24" width="50px" fill="#000000">
                     <path d="M0 0h24v24H0V0z" fill="none" />
@@ -93,7 +93,7 @@
 
 <!-- Total Schedules -->
 <div class="col-6 col-sm-4 col-md-3 mb-3">
-    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF;background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);">
         <div class="d-flex align-items-center">
             <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 0 24 24" width="50px" fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -115,7 +115,9 @@
 
 <!-- Total Routes -->
 <div class="col-6 col-sm-4 col-md-3 mb-3">
-    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF;
+background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);
+">
         <div class="d-flex align-items-center">
             <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 0 24 24" width="50px" fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -138,7 +140,9 @@
 
 <!-- Total Locations -->
 <div class="col-6 col-sm-4 col-md-3 mb-3">
-    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF;
+background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);
+">
         <div class="d-flex align-items-center">
             <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 0 24 24" width="50px" fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -161,7 +165,9 @@
 
     <!-- Total Bus -->
     <div class="col-6 col-sm-4 col-md-3 mb-3">
-        <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+        <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF;
+background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);
+">
             <div class="d-flex align-items-center">
                 <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="50px" viewBox="0 0 20 20" width="50px" fill="#000000">
                     <g>
@@ -195,7 +201,9 @@
     
     <!-- Total Staff (Drivers + Conductors) -->
 <div class="col-6 col-sm-4 col-md-3 mb-3">
-    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);">
+    <div class="bg-white shadow border-top p-3 border-primary rounded h-100" style="background-color: #FFFFFF;
+background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);
+">
         <div class="d-flex align-items-center">
             <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 0 24 24" width="50px" fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -227,21 +235,147 @@
 
 
 
-    <!-- Chart.js canvas -->
-    <div class="row mt-4" style="background-color: #D9AFD9;
-background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
-">
+<div class="row mt-4" style="background-color: #4158D0;
+background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+ width: 1200px; margin-left: 2px; height: 600px">
+    <div class="col-md-6">
+        <canvas id="passengerChart"></canvas>
+        <script>
+            var ctx = document.getElementById('passengerChart').getContext('2d');
+
+            // Fetch passenger type data from PHP
+            var passengerTypes = <?php
+                $types = ['Regular', 'Student', 'PWD', 'Senior'];
+                $counts = [];
+
+                foreach ($types as $type) {
+                    $query = "SELECT COUNT(*) AS count FROM tblbook WHERE passenger_type = '$type'";
+                    $result = mysqli_query($conn, $query);
+                    $row = mysqli_fetch_assoc($result);
+                    $counts[$type] = $row['count'];
+                }
+
+                echo json_encode(array_values($counts)); // Output counts as JSON
+            ?>;
+
+            // Prepare labels for the pie chart
+            var labels = <?php echo json_encode($types); ?>;
+
+            // Create a new pie chart
+            var passengerChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Bookings by Passenger Type',
+                        data: passengerTypes,
+                        backgroundColor: [
+                            'rgba(243, 167, 214, 1)',
+                            'rgba(255, 166, 185, 1)',
+                            'rgba(255, 204, 102, 1)',
+                            'rgba(251, 255, 153, 1)'
+                        ],
+                        borderColor: [
+                            'black',
+                            'black',
+                            'black',
+                            'black'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                        color: 'white' // Change this color to whatever you prefer
+                    }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Booking Distribution by Passenger Type',
+                            color: 'black'
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    <div class="col-md-6">
+        <canvas id="staffChart"></canvas>
+        <script>
+            var ctx = document.getElementById('staffChart').getContext('2d');
+
+            // Fetch staff data from PHP
+            var staffCounts = <?php
+                $driverQuery = "SELECT COUNT(*) AS count FROM tbldriver";
+                $driverResult = mysqli_query($conn, $driverQuery);
+                $driverRow = mysqli_fetch_assoc($driverResult);
+                $driverCount = $driverRow['count'];
+
+                $conductorQuery = "SELECT COUNT(*) AS count FROM tblconductor";
+                $conductorResult = mysqli_query($conn, $conductorQuery);
+                $conductorRow = mysqli_fetch_assoc($conductorResult);
+                $conductorCount = $conductorRow['count'];
+
+                echo json_encode([$driverCount, $conductorCount]); // Output counts as JSON
+            ?>;
+
+            // Prepare labels for the staff pie chart
+            var staffLabels = ['Drivers', 'Conductors'];
+
+            // Create a new pie chart
+            var staffChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: staffLabels, // Only staff labels
+                    datasets: [{
+                        label: 'Total Staff',
+                        data: staffCounts, // Only staff data
+                        backgroundColor: [
+                            'rgba(221, 180, 245, 1)', // Drivers
+                            'rgba(179, 255, 210, 1)'   // Conductors
+                        ],
+                        borderColor: [
+                            'black', // Drivers
+                            'black'   // Conductors
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                        color: 'black' // Change this color to whatever you prefer
+                    }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Total Staff',
+                            color: 'black'
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>
+
+<!-- The booking chart -->
+<div class="row mt-4" style="background-image: linear-gradient( 90.5deg,  rgba(152,45,255,1) 0.7%, rgba(90,241,255,1) 51.5%, rgba(65,239,164,1) 100.6% );; width: 1200px; margin-left: 2px">
     <div class="col-12">
         <canvas id="bookingChart"></canvas>
     </div>
 </div>
 
-<!-- Chart.js script -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
     var ctx = document.getElementById('bookingChart').getContext('2d');
-    
+
     <?php
     // Fetch the total number of bookings per month
     $query = "
@@ -249,10 +383,10 @@ background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
             MONTH(book_date) as month_number, 
             MONTHNAME(book_date) as month, 
             COUNT(*) as total 
-        FROM tblbooks
+        FROM tblbook
         GROUP BY MONTH(book_date) 
         ORDER BY MONTH(book_date)";
-    
+
     $result = mysqli_query($conn, $query);
 
     // Initialize an array with all 12 months
@@ -267,36 +401,156 @@ background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
     // Populate the totals array with data from the database
     while ($row = mysqli_fetch_assoc($result)) {
         // Subtract 1 from month_number to match array index (0-11)
-        $totals[$row['month_number'] - 1] = $row['total'];
+        if ($row['month_number'] >= 1 && $row['month_number'] <= 12) {
+            $totals[$row['month_number'] - 1] = max(0, (int)$row['total']); // Ensure total is not negative
+        }
     }
     ?>
 
-    var bookingChart = new Chart(ctx, {
+var bookingChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($months); ?>,  // X-axis labels (all 12 months)
+        datasets: [{
+            label: 'Total Bookings',
+            data: <?php echo json_encode($totals); ?>,  // Y-axis data corresponding to each month
+            backgroundColor: [
+                            '#f43b47', // Drivers
+                        ],
+                        borderColor: [
+                            'black', // Drivers
+                        ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+                },
+                title: {
+                display: true,
+                text: 'Total Bookings / Months',
+                color: 'black',
+                font: {
+                    size: 20 // Change font size as needed
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'black' // Set the color of the x-axis labels (months) to white
+                },
+                grid: {
+                    color: 'gray' // Set the color of the x-axis grid lines to white
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white' // Set the color of the y-axis labels to white (optional)
+                },
+                grid: {
+                    color: 'gray' // Set the color of the y-axis grid lines to white (optional)
+                },
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+
+<div class="row mt-4" style="background-image: linear-gradient( 73.2deg,  rgba(248,205,205,1) 23.2%, rgba(149,170,211,1) 77% ); width: 1200px; margin-left: 2px">
+    <div class="col-12 mt-4">
+        <!-- Bus Type Horizontal Bar Chart -->
+        <canvas id="busTypeChart"></canvas>
+    </div>
+</div>
+
+<!-- Chart.js script -->
+<script>
+    var ctxBusType = document.getElementById('busTypeChart').getContext('2d');
+
+    // Fetch bus type data from PHP for the Bar Chart
+    var busTypeCounts = <?php
+        // Query to count buses by type (Regular and Air-Conditioned)
+        $busTypes = ['Regular', 'Air conditioned'];
+        $busCounts = [];
+
+        foreach ($busTypes as $busType) {
+            $query = "SELECT COUNT(*) AS count FROM tblbus WHERE bus_type = '$busType'";
+            $result = mysqli_query($conn, $query);
+            if ($result) { // Check if the query executed successfully
+                $row = mysqli_fetch_assoc($result);
+                $busCounts[$busType] = $row['count'];
+            } else {
+                $busCounts[$busType] = 0; // Set count to 0 if query fails
+            }
+        }
+
+        echo json_encode(array_values($busCounts)); // Output counts as JSON
+    ?>;
+
+    var busLabels = <?php echo json_encode($busTypes); ?>;
+
+    // Log bus labels and counts to the console for debugging
+    console.log('Bus Labels:', busLabels);
+    console.log('Bus Counts:', busTypeCounts);
+
+    // Create a new horizontal bar chart for bus types
+    var busTypeChart = new Chart(ctxBusType, {
         type: 'bar',
         data: {
-            labels: <?php echo json_encode($months); ?>,  // X-axis labels (all 12 months)
+            labels: busLabels,
             datasets: [{
-                label: 'Total Bookings',
-                data: <?php echo json_encode($totals); ?>,  // Y-axis data corresponding to each month
-                backgroundColor: 'rgba(0, 128, 128, 0.5)',
-                borderColor: 'rgba(0, 255, 255, 0.5)',
+                label: 'Buses',
+                data: busTypeCounts,
+                backgroundColor: [
+                    '#0d4d77',
+                    '#e8d425'
+                ],
+                borderColor: [
+                    'black',
+                    'black'
+                ],
                 borderWidth: 1
             }]
         },
         options: {
+            responsive: true,
+            indexAxis: 'y', // This makes the bar chart horizontal
             scales: {
-                y: {
+                x: {
+                    ticks:{
+                        color: 'black'
+                    },
                     beginAtZero: true
+                },
+                y: {
+                    ticks:{
+                        color: 'black'
+                    }
                 }
             },
             plugins: {
                 legend: {
-                    display: false
+                    position: 'top',
+                    labels:{
+                        color: 'black'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Type of Buses',
+                    color: 'black'
                 }
             }
         }
     });
 </script>
+
+
 <?php include('includes/scripts.php')?>
 
 </body>
