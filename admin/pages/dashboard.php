@@ -59,7 +59,7 @@
                 <p class="mb-0" style="font-family: 'Times New Roman', serif;"><b>TOTAL BOOKINGS</b></p>
                 <h1>
                     <?php
-                    $q = mysqli_query($conn,"SELECT * from tblbook");
+                    $q = mysqli_query($conn,"SELECT * from tblbooks");
                     $num_rows = mysqli_num_rows($q);
                     echo $num_rows;
                     ?>
@@ -249,7 +249,7 @@ background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
                 $counts = [];
 
                 foreach ($types as $type) {
-                    $query = "SELECT COUNT(*) AS count FROM tblbook WHERE passenger_type = '$type'";
+                    $query = "SELECT COUNT(*) AS count FROM tblbooks WHERE passenger_type = '$type'";
                     $result = mysqli_query($conn, $query);
                     $row = mysqli_fetch_assoc($result);
                     $counts[$type] = $row['count'];
@@ -383,7 +383,7 @@ background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
             MONTH(book_date) as month_number, 
             MONTHNAME(book_date) as month, 
             COUNT(*) as total 
-        FROM tblbook
+        FROM tblbooks
         GROUP BY MONTH(book_date) 
         ORDER BY MONTH(book_date)";
 

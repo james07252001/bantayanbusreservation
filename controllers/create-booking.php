@@ -28,7 +28,7 @@ if (isset($_FILES['upload_id']) && $_FILES['upload_id']['error'] == 0) {
         $routeName = $_POST['routeName'];
         
         // Use prepared statements to insert into the database
-        $stmt = $db->prepare("INSERT INTO tblbook (schedule_id, passenger_id, seat_num, total, passenger_type, upload_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $db->prepare("INSERT INTO tblbooks (schedule_id, passenger_id, seat_num, total, passenger_type, upload_id) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssss", $schedule_id, $passenger_id, $seat_num, $total, $passenger_type, $file_name);
 
         if ($stmt->execute()) {

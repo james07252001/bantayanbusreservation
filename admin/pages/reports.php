@@ -136,13 +136,13 @@
     function drawChart() {
         <?php
             // Fetch total fare
-            $query = "SELECT SUM(total) AS total_fare FROM tblbook";
+            $query = "SELECT SUM(total) AS total_fare FROM tblbooks";
             $result = mysqli_query($conn, $query);
             $row = mysqli_fetch_assoc($result);
             $totalFare = $row['total_fare'];
 
             // Fetch booking count
-            $bookingCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tblbook"));
+            $bookingCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tblbooks"));
         ?>
 
         var data = google.visualization.arrayToDataTable([

@@ -18,7 +18,7 @@
     // }
 
      // Fetch pending bookings
-     $query = "SELECT * FROM tblbook WHERE payment_status = 'pending'";
+     $query = "SELECT * FROM tblbooks WHERE payment_status = 'pending'";
      $result = mysqli_query($conn, $query);
      $pendingBookings = mysqli_fetch_all($result, MYSQLI_ASSOC);
      $pendingCount = count($pendingBookings);
