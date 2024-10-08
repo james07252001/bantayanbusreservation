@@ -59,9 +59,9 @@
               <li class="nav-item">
               <a class="nav-link" href="/bantayanbus/discount.php"> <i class="fa fa-tags icon w3-large " style="color: black"> <b>Discount</a></b></i>
               </li> 
-              <li class="nav-item">
+              <!--<li class="nav-item">
               <a class="nav-link" href="register.php"> <i class="fa fa-user icon w3-large " style="color: black; font-weight: bold"> <b>User</a></b></i>
-              </li> 
+              </li>--> 
               <li class="nav-item">
                 <a class="nav-link" href="./admin/index.php"> <i class="fa fa-user icon w3-large " style="color: black; font-weight: bold"><b> Admin</a></b></i>
               </li>
