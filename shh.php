@@ -48,7 +48,7 @@
         }
         .content p {
             color: #ffffff;
-            font-size: 1.2em;
+            font-size: 2.1em;
             line-height: 1.5;
             padding: 20px;
             border-right: 2px solid white;
@@ -129,7 +129,7 @@
             <span class="heartbeat">S</span>
         </h1>
         <div class="content">
-            <p> <center>"Today a reader, tomorrow a leader." - Margaret Fuller</center></p>
+            <p> "Today a reader, tomorrow a leader." - Margaret Fuller</p>
         </div>
     </div>
 </body>
