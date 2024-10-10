@@ -1,47 +1,32 @@
 <?php
 include('db.php');
+$database = new Database();
+$conn = $database->getConnection();
 
-// Check if a file is uploaded
-if (isset($_FILES['upload_id']) && $_FILES['upload_id']['error'] == 0) {
-    // Define the directory where files will be saved
-    $target_dir = "uploads/"; // Make sure the 'uploads/' directory exists and is writable
-
-    // Get the file extension
-    $file_extension = pathinfo($_FILES['upload_id']['name'], PATHINFO_EXTENSION);
-
-    // Generate a unique filename
-    $file_name = uniqid() . '.' . $file_extension;
-
-    // Set the full file path
-    $target_file = $target_dir . $file_name;
-
-    // Move the uploaded file to the target directory
-    if (move_uploaded_file($_FILES['upload_id']['tmp_name'], $target_file)) {
-        // File uploaded successfully, save the file name in the database
-
-        // Prepare your booking insertion query
+if (count($_POST) > 0) {
+    if ($_POST['type'] == 1) {
         $schedule_id = $_POST['schedule_id'];
         $passenger_id = $_POST['passenger_id'];
+        $passenger_email = $_POST['passenger_email'];
         $seat_num = $_POST['seat_num'];
+        $payment_status = "pending";
         $total = $_POST['total'];
-        $passenger_type = $_POST['passenger_type'];
         $routeName = $_POST['routeName'];
-        
-        // Use prepared statements to insert into the database
-        $stmt = $db->prepare("INSERT INTO tblbooks (schedule_id, passenger_id, seat_num, total, passenger_type, upload_id) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $schedule_id, $passenger_id, $seat_num, $total, $passenger_type, $file_name);
+        $book_reference = $routeName . "_00" . $schedule_id . "00" . $seat_num;
 
-        if ($stmt->execute()) {
-            echo json_encode(["success" => true, "message" => "Booking created successfully!"]);
+        // Get passenger type
+        $passenger_type = $_POST['passenger_type'];
+
+        // Update SQL query to exclude upload_id
+        $sql = "INSERT INTO `tblbook` (`schedule_id`, `passenger_id`, `seat_num`, `payment_status`, `total`, `book_reference`, `passenger_type`) 
+                VALUES ('$schedule_id', '$passenger_id', '$seat_num', '$payment_status', '$total', '$book_reference', '$passenger_type')";
+
+        if (mysqli_query($conn, $sql)) {
+            echo json_encode(array("statusCode" => 201));
         } else {
-            echo json_encode(["success" => false, "message" => "Error creating booking."]);
+            echo json_encode(array("statusCode" => 500, "message" => "Error: " . mysqli_error($conn)));
         }
-    } else {
-        // File upload failed
-        echo json_encode(["success" => false, "message" => "Error uploading file."]);
+        mysqli_close($conn);
     }
-} else {
-    // No file uploaded, handle accordingly
-    echo json_encode(["success" => false, "message" => "No ID proof uploaded."]);
 }
 ?>

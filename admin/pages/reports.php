@@ -1,6 +1,6 @@
 <?php
     // Database connection
-    $conn = mysqli_connect('localhost', 'u510162695_bobrs', '1Bobrs_password', 'u510162695_bobrs');
+    $conn = mysqli_connect('localhost', 'root', '', 'bobrs');
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -136,13 +136,13 @@
     function drawChart() {
         <?php
             // Fetch total fare
-            $query = "SELECT SUM(total) AS total_fare FROM tblbooks";
+            $query = "SELECT SUM(total) AS total_fare FROM tblbook";
             $result = mysqli_query($conn, $query);
             $row = mysqli_fetch_assoc($result);
             $totalFare = $row['total_fare'];
 
             // Fetch booking count
-            $bookingCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tblbooks"));
+            $bookingCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tblbook"));
         ?>
 
         var data = google.visualization.arrayToDataTable([

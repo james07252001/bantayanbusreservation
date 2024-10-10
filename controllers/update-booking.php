@@ -10,7 +10,7 @@ if (count($_POST) > 0) {
         $email = $_POST['email'];
 
         // Update payment status
-        $sql = "UPDATE `tblbooks` SET `payment_status`='$payment_status' WHERE id=$id";
+        $sql = "UPDATE `tblbook` SET `payment_status`='$payment_status' WHERE id=$id";
         
         if (mysqli_query($conn, $sql)) {
             // Send confirmation email
@@ -31,7 +31,7 @@ if (count($_POST) > 0) {
         // Update seat number if provided
         if (isset($_POST['seat_num'])) {
             $seat_num = $_POST['seat_num'];
-            $sql_seat = "UPDATE `tblbooks` SET `seat_num`='$seat_num' WHERE id=$id";
+            $sql_seat = "UPDATE `tblbook` SET `seat_num`='$seat_num' WHERE id=$id";
             if (!mysqli_query($conn, $sql_seat)) {
                 echo "Error updating seat number: " . mysqli_error($conn);
             }

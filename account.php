@@ -103,6 +103,26 @@
                         $fare = $row['fare'];
                         $discount_amount = $fare * $discount;
                         $total = $fare - $discount_amount;
+
+                        // Determine the color and capitalize passenger type
+                        $passengerType = ucfirst($row['passenger_type']); // Capitalize first letter
+                        $color = '';
+                        switch ($row['passenger_type']) {
+                            case 'regular':
+                                $color = 'chocolate';
+                                break;
+                            case 'student':
+                                $color = 'deeppink';
+                                break;
+                            case 'senior':
+                                $color = 'orangered';
+                                break;
+                            case 'pwd':
+                                $color = 'red';
+                                break;
+                            default:
+                                $color = 'black'; // Fallback color
+                        }
                         ?>
                         <div class="col-md-4 mb-3">
                             <div class="border bg-light">
@@ -128,7 +148,7 @@
                                         </p>
                                         <p class="mb-0 d-flex align-items-center justify-content-between">
                                             <span class="text-muted">Passenger Type:</span>
-                                            <span class="font-weight-bold"><?php echo $row['passenger_type'] ?></span>
+                                            <span class="font-weight-bold" style="color: <?php echo $color; ?>;"><?php echo $passengerType; ?></span>
                                         </p>
                                         <p class="mb-0 d-flex align-items-center justify-content-between">
                                             <span class="text-muted">Bus Name:</span>
@@ -194,14 +214,11 @@
 </div>
 
 
-
 <div class="tab-pane fade p-3" id="Confirmed" role="tabpanel" aria-labelledby="Confirmed-tab">
     <div class="row">
         <?php
-            foreach ($bookings as &$row)
-            {
-                if($row['payment_status'] == 'confirmed')
-                {
+            foreach ($bookings as &$row) {
+                if ($row['payment_status'] == 'confirmed') {
                     $route_from = $new_location->getById($row['route_from']);
                     $route_to = $new_location->getById($row['route_to']);
                     $bus = $new_bus->getById($row["bus_id"]);
@@ -216,6 +233,26 @@
                     $fare = $row['fare'];
                     $discount_amount = $fare * $discount;
                     $total = $fare - $discount_amount;
+
+                    // Determine the color and capitalize passenger type
+                    $passengerType = ucfirst($row['passenger_type']); // Capitalize first letter
+                    $color = '';
+                    switch ($row['passenger_type']) {
+                        case 'regular':
+                            $color = 'chocolate';
+                            break;
+                        case 'student':
+                            $color = 'deeppink';
+                            break;
+                        case 'senior':
+                            $color = 'orangered';
+                            break;
+                        case 'pwd':
+                            $color = 'red';
+                            break;
+                        default:
+                            $color = 'black'; // Fallback color
+                    }
                     ?>
                     <div class="col-md-4 mb-3">
                         <div class="border bg-light">
@@ -240,9 +277,9 @@
                                         <span class="font-weight-bold"><?php echo $passenger['first_name'].' '. $passenger['last_name'] ?></span>
                                     </p>
                                     <p class="mb-0 d-flex align-items-center justify-content-between">
-                                            <span class="text-muted">Passenger Type:</span>
-                                            <span class="font-weight-bold"><?php echo $row['passenger_type'] ?></span>
-                                        </p>
+                                        <span class="text-muted">Passenger Type:</span>
+                                        <span class="font-weight-bold" style="color: <?php echo $color; ?>;"><?php echo $passengerType; ?></span>
+                                    </p>
                                     <p class="mb-0 d-flex align-items-center justify-content-between">
                                         <span class="text-muted">Bus Name:</span>
                                         <span class="font-weight-bold"><?php echo $bus['bus_num'] ?></span>
@@ -305,13 +342,12 @@
     </div>
 </div>
 
+
 <div class="tab-pane fade p-3" id="Cancelled" role="tabpanel" aria-labelledby="Cancelled-tab">
     <div class="row">
         <?php
-            foreach ($bookings as &$row)
-            {
-                if($row['payment_status'] == 'cancel')
-                {
+            foreach ($bookings as &$row) {
+                if ($row['payment_status'] == 'cancel') {
                     $route_from = $new_location->getById($row['route_from']);
                     $route_to = $new_location->getById($row['route_to']);
                     
@@ -323,7 +359,26 @@
                     $fare = $row['fare'];
                     $discount_amount = $fare * $discount;
                     $total = $fare - $discount_amount;
-                    
+
+                    // Determine the color and capitalize passenger type
+                    $passengerType = ucfirst($row['passenger_type']); // Capitalize first letter
+                    $color = '';
+                    switch ($row['passenger_type']) {
+                        case 'regular':
+                            $color = 'chocolate';
+                            break;
+                        case 'student':
+                            $color = 'deeppink';
+                            break;
+                        case 'senior':
+                            $color = 'orangered';
+                            break;
+                        case 'pwd':
+                            $color = 'red';
+                            break;
+                        default:
+                            $color = 'black'; // Fallback color
+                    }
                     ?>
                     <div class="col-md-4 mb-3">
                         <div class="border bg-light">
@@ -348,9 +403,9 @@
                                         <span class="font-weight-bold"><?php echo $passenger['first_name'].' '. $passenger['last_name'] ?></span>
                                     </p>
                                     <p class="mb-0 d-flex align-items-center justify-content-between">
-                                            <span class="text-muted">Passenger Type:</span>
-                                            <span class="font-weight-bold"><?php echo $row['passenger_type'] ?></span>
-                                        </p>
+                                        <span class="text-muted">Passenger Type:</span>
+                                        <span class="font-weight-bold" style="color: <?php echo $color; ?>;"><?php echo $passengerType; ?></span>
+                                    </p>
                                     <p class="mb-0 d-flex align-items-center justify-content-between">
                                         <span class="text-muted">Bus Name:</span>
                                         <span class="font-weight-bold"><?php echo $bus['bus_num'] ?></span>
@@ -409,6 +464,7 @@
         ?>
     </div>
 </div>
+
 
 
 <div class="tab-pane fade bg-white p-3 border-right border-left border-bottom" id="settings" role="tabpanel" aria-labelledby="settings-tab">

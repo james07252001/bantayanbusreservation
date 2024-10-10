@@ -2,7 +2,7 @@
 class Book
 {
     private $conn;
-    private $table_name = "tblbooks";
+    private $table_name = "tblbook";
 
     // Database Connection 
     public function __construct($db)
