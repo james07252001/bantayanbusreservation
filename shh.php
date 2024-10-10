@@ -43,7 +43,7 @@
             }
         }
         .content {
-            margin-top: 20px;
+            margin-top: 200px;
             background-image: linear-gradient( 179.7deg,  rgba(249,21,215,1) 1.1%, rgba(22,0,98,1) 99% );;
         }
         .content p {
