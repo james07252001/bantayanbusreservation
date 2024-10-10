@@ -129,7 +129,7 @@
             <span class="heartbeat">S</span>
         </h1>
         <div class="content">
-            <p>"Today a reader, tomorrow a leader." - >Margaret Fuller</p>
+            <p>        "Today a reader, tomorrow a leader." - Margaret Fuller      </p>
         </div>
     </div>
 </body>
