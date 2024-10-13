@@ -15,13 +15,12 @@
     if(isset($_POST["sign-up-submit"])){
         $new_passenger = new Passenger($db);
         
-        $first_name = htmlspecialchars(trim($_POST["first_name"]), ENT_QUOTES, 'UTF-8');
-        $last_name = htmlspecialchars(trim($_POST["last_name"]), ENT_QUOTES, 'UTF-8');
-        $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-        $address = htmlspecialchars(trim($_POST["address"]), ENT_QUOTES, 'UTF-8');
-        $password = trim($_POST["password"]);
-        $confirm_password = trim($_POST["confirm_password"]);
-        $agree_terms = isset($_POST["agree_terms"]);  // Check if the checkbox is checked
+        $first_name = $_POST["first_name"];
+        $last_name = $_POST["last_name"];
+        $email = $_POST["email"];
+        $address = $_POST["address"];
+        $password = $_POST["password"];
+        $agree_terms = isset($_POST["agree_terms"]); // Check if the checkbox is checked
         
         // Regular expressions for validation
         $name_pattern = "/^[a-zA-Z]+$/";
@@ -34,59 +33,40 @@
             $error = "Last name can only contain letters.";
         } elseif (!preg_match($address_pattern, $address)) {
             $error = "Address can only contain letters and spaces.";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error = "Invalid email format.";
         } elseif (strlen($password) < 7) {
             $error = "Password must be at least 7 characters long.";
-        } elseif ($password !== $confirm_password) {
-            $error = "Passwords do not match.";
-        } elseif (!$agree_terms) {
+        } elseif (!$agree_terms) { // Check if the terms are agreed
             $error = "You must agree to the terms and conditions.";
         } else {
-            // Check if the email already exists (using a function in Passenger class)
-            if ($new_passenger->emailExists($email)) {
-                header("Location: signup.php?error=emailExist");
-                exit;
-            }
-            
-            // Hash the password securely
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            
-            // Create new passenger record
-            if (!$new_passenger->create($first_name, $last_name, $email, $address, $hashed_password)) {
-                header("Location: signup.php?error=stmtfailed");
-                exit;
-            } else {
-                header("Location: success.php");
-                exit;
-            }
+            // Create the new passenger
+            $new_passenger->create($first_name, $last_name, $email, $address, $password);
+            header("Location: success.php");
+            exit;
         }
     }
 ?>
 
 <main>
     <div class="signup-container d-flex align-items-center justify-content-center">
-        <div class="w-100 m-auto bg-white shadow-sm" style="max-width: 500px;">
-            <div class="bg-primary p-3">
+        <div class="w-100 m-auto bg-white shadow-sm" style="max-width: 500px; ">
+            <div class="bg-primary p-3" style="background: rgb(51,122,183);background: radial-gradient(circle, rgba(51,122,183,1) 0%, rgba(4,92,167,1) 50%, rgba(0,137,255,1) 100%);">
                 <h1 class="text-center">Create an Account</h1>
             </div>
 
-            <div class="p-3">
-                <!-- Display error messages -->
+            <div class="p-3" style="white">
                 <?php
-                    if (isset($error)) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($error, ENT_QUOTES, 'UTF-8') . '</div>';
+                    if(isset($error)){
+                        echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
                     }
-                    if (isset($_GET["error"])) {
-                        if ($_GET["error"] == "emailExist") {
+                    if(isset($_GET["error"])){
+                        if($_GET["error"] == "emailExist"){
                             echo '<div class="alert alert-danger" role="alert">Email already exists.</div>';
-                        } elseif ($_GET["error"] == "stmtfailed") {
+                        } else if($_GET["error"] == "stmtfailed"){
                             echo '<div class="alert alert-danger" role="alert">Error creating an account.</div>';
                         }
                     }
                 ?>
 
-                <!-- Signup Form -->
                 <form method="POST" action="" id="signupForm">
                     <div class="form-group">
                         <label for="first_name" style="color: black; font-weight: bold">First Name</label>
@@ -128,12 +108,10 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="agree_terms" name="agree_terms">
-                        <label class="form-check-label" for="agree_terms" style="color: black;">I agree to the <a href="#" id="termsLink" style="color: skyblue;">Terms and Conditions</a></label>
-                    </div>
-                    
+                    <!-- <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="agree_terms" name="agree_terms" required />
+                        <label class="form-check-label" for="agree_terms">I agree to the <a href="#" id="termsLink" style="color: skyblue;">terms and conditions</a></label>
+                    </div> -->
                     <button type="submit" class="btn btn-block glow-button" name="sign-up-submit">Register</button>
 
                     <div class="text-center" style="color: black; font-weight: bold">
@@ -146,11 +124,28 @@
     </div>
 </main>
 
+<!-- Modal for Terms and Conditions -->
+<!-- <div id="termsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Terms and Conditions</h2>
+        <p> -->
+            <!-- Your terms and conditions text goes here -->
+            <!--These terms and conditions outline the rules and regulations for the use of Our Service. 
+            By accessing or using the Service, you agree to be bound by these terms.
+        </p>
+        <p> -->
+            <!-- Add more text as needed -->
+           <!--  If you do not agree with any part of the terms, you must not use our Service.
+        </p>
+    </div>
+</div> -->
+
 <?php include('includes/scripts.php')?>
 <?php include('includes/layout-footer.php')?>
 
 <script>
-    // Modal handling for Terms and Conditions
+    // Modal handling
     var modal = document.getElementById("termsModal");
     var termsLink = document.getElementById("termsLink");
     var span = document.getElementsByClassName("close")[0];
@@ -190,7 +185,6 @@
         }
     });
 
-    // Toggle password visibility
     document.querySelectorAll('.toggle-password').forEach(function(icon) {
         icon.addEventListener('click', function(e) {
             var passwordField = (icon.id === 'toggle-password') ? document.getElementById('password') : document.getElementById('confirm_password');
@@ -201,6 +195,7 @@
         });
     });
 </script>
+
 <style>
     /* Modal Styles */
     .modal {
