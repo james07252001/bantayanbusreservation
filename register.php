@@ -1,6 +1,7 @@
 <?php 
     include('includes/layout-header.php');
     
+    // Redirect to account if the user is already logged in
     if(isset($_SESSION["userId"])){
         header("location: account.php");
         exit;
@@ -9,19 +10,26 @@
     include('controllers/db.php');
     include('controllers/passenger.php');
 
+    // Database connection
     $database = new Database();
     $db = $database->getConnection();
+
+    // CSRF token generation
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
 
     if(isset($_POST["sign-up-submit"])){
         $new_passenger = new Passenger($db);
         
-        $first_name = $_POST["first_name"];
-        $last_name = $_POST["last_name"];
-        $email = $_POST["email"];
-        $address = $_POST["address"];
+        $first_name = htmlspecialchars(trim($_POST["first_name"]), ENT_QUOTES, 'UTF-8');
+        $last_name = htmlspecialchars(trim($_POST["last_name"]), ENT_QUOTES, 'UTF-8');
+        $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+        $address = htmlspecialchars(trim($_POST["address"]), ENT_QUOTES, 'UTF-8');
         $password = $_POST["password"];
-        $agree_terms = isset($_POST["agree_terms"]); // Check if the checkbox is checked
-        
+        $confirm_password = $_POST["confirm_password"];
+        $agree_terms = isset($_POST["agree_terms"]); // Check if checkbox is checked
+
         // Regular expressions for validation
         $name_pattern = "/^[a-zA-Z]+$/";
         $address_pattern = "/^[a-zA-Z\s]+$/"; // Allows spaces for address
@@ -33,41 +41,49 @@
             $error = "Last name can only contain letters.";
         } elseif (!preg_match($address_pattern, $address)) {
             $error = "Address can only contain letters and spaces.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Invalid email address.";
         } elseif (strlen($password) < 7) {
             $error = "Password must be at least 7 characters long.";
-        } elseif (!$agree_terms) { // Check if the terms are agreed
+        } elseif ($password !== $confirm_password) {
+            $error = "Passwords do not match.";
+        } elseif (!$agree_terms) {
             $error = "You must agree to the terms and conditions.";
+        } elseif ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $error = "Invalid CSRF token.";
         } else {
+            // Hash the password before saving
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
             // Create the new passenger
-            $new_passenger->create($first_name, $last_name, $email, $address, $password);
-            header("Location: success.php");
-            exit;
+            if ($new_passenger->create($first_name, $last_name, $email, $address, $hashed_password)) {
+                header("Location: success.php");
+                exit;
+            } else {
+                $error = "Error creating account. Please try again.";
+            }
         }
     }
 ?>
 
 <main>
     <div class="signup-container d-flex align-items-center justify-content-center">
-        <div class="w-100 m-auto bg-white shadow-sm" style="max-width: 500px; ">
+        <div class="w-100 m-auto bg-white shadow-sm" style="max-width: 500px;">
             <div class="bg-primary p-3" style="background: rgb(51,122,183);background: radial-gradient(circle, rgba(51,122,183,1) 0%, rgba(4,92,167,1) 50%, rgba(0,137,255,1) 100%);">
                 <h1 class="text-center">Create an Account</h1>
             </div>
 
-            <div class="p-3" style="white">
+            <div class="p-3">
                 <?php
-                    if(isset($error)){
-                        echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
-                    }
-                    if(isset($_GET["error"])){
-                        if($_GET["error"] == "emailExist"){
-                            echo '<div class="alert alert-danger" role="alert">Email already exists.</div>';
-                        } else if($_GET["error"] == "stmtfailed"){
-                            echo '<div class="alert alert-danger" role="alert">Error creating an account.</div>';
-                        }
+                    if (isset($error)) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($error, ENT_QUOTES, 'UTF-8') . '</div>';
                     }
                 ?>
 
                 <form method="POST" action="" id="signupForm">
+                    <!-- CSRF token field -->
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>" />
+
                     <div class="form-group">
                         <label for="first_name" style="color: black; font-weight: bold">First Name</label>
                         <input type="text" class="form-control" id="first_name" name="first_name" required />
@@ -108,10 +124,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="form-group form-check">
+                    <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="agree_terms" name="agree_terms" required />
                         <label class="form-check-label" for="agree_terms">I agree to the <a href="#" id="termsLink" style="color: skyblue;">terms and conditions</a></label>
-                    </div> -->
+                    </div>
                     <button type="submit" class="btn btn-block glow-button" name="sign-up-submit">Register</button>
 
                     <div class="text-center" style="color: black; font-weight: bold">
@@ -124,28 +140,11 @@
     </div>
 </main>
 
-<!-- Modal for Terms and Conditions -->
-<!-- <div id="termsModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Terms and Conditions</h2>
-        <p> -->
-            <!-- Your terms and conditions text goes here -->
-            <!--These terms and conditions outline the rules and regulations for the use of Our Service. 
-            By accessing or using the Service, you agree to be bound by these terms.
-        </p>
-        <p> -->
-            <!-- Add more text as needed -->
-           <!--  If you do not agree with any part of the terms, you must not use our Service.
-        </p>
-    </div>
-</div> -->
-
 <?php include('includes/scripts.php')?>
 <?php include('includes/layout-footer.php')?>
 
 <script>
-    // Modal handling
+    // Modal handling for terms and conditions
     var modal = document.getElementById("termsModal");
     var termsLink = document.getElementById("termsLink");
     var span = document.getElementsByClassName("close")[0];
@@ -190,123 +189,7 @@
             var passwordField = (icon.id === 'toggle-password') ? document.getElementById('password') : document.getElementById('confirm_password');
             var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordField.setAttribute('type', type);
-            icon.querySelector('i').classList.toggle('fa-eye');
             icon.querySelector('i').classList.toggle('fa-eye-slash');
         });
     });
 </script>
-
-<style>
-    /* Modal Styles */
-    .modal {
-        display: none; 
-        position: fixed; 
-        z-index: 1; 
-        left: 0;
-        top: 0;
-        width: 100%; 
-        height: 100%; 
-        overflow: auto; 
-        background-color: rgb(0,0,0); 
-        background-color: rgba(0,0,0,0.4); 
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto; 
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%; 
-        max-width: 600px; 
-        border-radius: 5px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    main {
-        background-image: url('assets/img/d3.png'); /* Replace with your image path */
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .signup-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .glow-button {
-        position: relative;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: white;
-        background-image: linear-gradient(-20deg, #337ab7 0%, #337ab7 100%);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        outline: none;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden; /* To clip the pseudo-elements */
-    }
-
-    .glow-button:before,
-    .glow-button:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 300%;
-        height: 300%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
-        transition: all 0.5s ease;
-        border-radius: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        z-index: 0;
-    }
-
-    .glow-button:before {
-        animation: ledGlow 1.5s infinite;
-    }
-
-    .glow-button:hover:before,
-    .glow-button:active:before {
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    .glow-button:hover {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    }
-
-    .glow-button:focus {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-    }
-
-    @keyframes ledGlow {
-        0%, 100% {
-            opacity: 0.6;
-        }
-        50% {
-            opacity: 1;
-        }
-    }
-
-</style>
