@@ -1,5 +1,26 @@
 # HTID:23422420: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
-php_value display_errors 1
+php_value display_errors 0
 # DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:23422420:
+
 RewriteEngine On
+
+# Redirect all traffic to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Restrict access to certain files
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh|bak|inc)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Add security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Redirect index.php to https://bantayanbusbooking.com/
 RewriteRule ^index\.php$ https://bantayanbusbooking.com/ [R=301,L]
