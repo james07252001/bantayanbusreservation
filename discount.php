@@ -7,105 +7,117 @@
     <?php 
         include('includes/layout-header.php');
     ?>
+    <style>
+        /* Container for the flip box effect */
+        .card-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-image: linear-gradient(109.6deg, rgba(254, 253, 205, 1) 11.2%, rgba(163, 230, 255, 1) 91.1%);
+        }
+
+        .flip-box {
+            width: 350px;
+            height: 450px;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        .flip-box-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-box:hover .flip-box-inner {
+            transform: rotateY(180deg);
+            box-shadow: 0 0 30px rgba(142, 14, 0, 1), 0 0 60px rgba(142, 14, 0, 0.8);
+        }
+
+        .flip-box-front,
+        .flip-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            padding: 20px;
+        }
+
+        .flip-box-front {
+            text-align: center; /* Center text horizontally */
+        }
+
+        .flip-box-front h2 {
+            margin: 0; /* Remove default margins */
+        }
+
+        .flip-box-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(to right, #1F1C18, #8E0E00);
+            color: white; /* Adjust text color for visibility */
+            display: flex; /* Add this line */
+            justify-content: center; /* Add this line */
+            align-items: center; /* Add this line */
+            text-align: center; /* Center text horizontally */
+            padding: 20px; /* Optional: adjust or remove if necessary */
+        }
+
+        .discount-summary {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <main style="display: flex; gap: 20px; justify-content: center; margin: 30px 0; padding: 20px; background-image: linear-gradient( 109.6deg,  rgba(254,253,205,1) 11.2%, rgba(163,230,255,1) 91.1% );">
-        <div style="max-width: 350px;">
-            <img src="assets/images/student.png" alt="Discount 1" style="width: 100%; height: auto;">
-            <h2>Students - 20% Discount</h2>
-            <p class="discount-summary">Enjoy a 20% discount year-round. Present a valid student ID or school registration card.</p>
-            <button class="read-more-btn" onclick="togglePopup('student-popup')">Read More</button>
+    <main class="card-container">
+        <div class="flip-box">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <img src="assets/img/mcc.jpg" alt="Discount 1" style="width: 100%; height: auto;">
+                    <h2>Students - 20% Discount</h2>
+                </div>
+                <div class="flip-box-back">
+                    <p>Enjoy a 20% discount year-round, including during summer breaks and legal holidays. To qualify, present a valid student ID or school registration card with your name, photo, and school details. Remember, no ID means no discount. Please note that students in medicine proper, law, graduate courses, and short-term programs are not eligible for this discount.</p>
+                </div>
+            </div>
         </div>
 
-        <div style="max-width: 350px;">
-            <img src="assets/images/senior.png" alt="Discount 2" style="width: 100%; height: auto;">
-            <h2>Senior Citizens - 20% Discount</h2>
-            <p class="discount-summary">To avail of the 20% discount, present your Senior Citizen ID or valid document proving age.</p>
-            <button class="read-more-btn" onclick="togglePopup('senior-popup')">Read More</button>
+        <div class="flip-box">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <img src="assets/img/senior.jpg" alt="Discount 2" style="width: 100%; height: auto;">
+                    <h2>Senior Citizens - 20% Discount</h2>
+                </div>
+                <div class="flip-box-back">
+                    <p>To avail of the 20% discount, please present your Senior Citizen ID, passport, or any other valid document that proves you are at least sixty (60) years old. This discount applies to both local and foreign senior citizens.</p>
+                </div>
+            </div>
         </div>
 
-        <div style="max-width: 350px;">
-            <img src="assets/images/pwd.jpg" alt="Discount 3" style="width: 100%; height: auto;">
-            <h2>PWD (Person with Disability) - 20% Discount</h2>
-            <p class="discount-summary">Present your PWD ID upon ticket purchase to avail of the 20% discount.</p>
-            <button class="read-more-btn" onclick="togglePopup('pwd-popup')">Read More</button>
+        <div class="flip-box">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <img src="assets/img/pwd.jpg" alt="Discount 3" style="width: 100%; height: auto;">
+                    <h2>PWD (Person with Disability) - 20% Discount</h2>
+                </div>
+                <div class="flip-box-back">
+                    <p>To avail of the 20% discount, please present your PWD ID upon ticket purchase. Remember, no ID means no discount. This discount applies to both local and foreign PWDs. However, PWD ID is not required when the disability is apparent, such as when the passenger is an amputee.</p>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- Popups for additional information -->
-    <div id="student-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('student-popup')">&times;</span>
-            <img src="assets/images/student.png" alt="Discount 1" style="width: 100%; height: auto;">
-            <h2>Students - 20% Discount</h2>
-            <p>Enjoy a 20% discount year-round, including during summer breaks and legal holidays. To qualify, present a valid student ID or school registration card with your name, photo, and school details. Remember, no ID means no discount. Please note that students in medicine proper, law, graduate courses, and short-term programs are not eligible for this discount.</p>
-        </div>
-    </div>
-
-    <div id="senior-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('senior-popup')">&times;</span>
-            <img src="assets/images/senior.png" alt="Discount 2" style="width: 100%; height: auto;">
-            <h2>Senior Citizens - 20% Discount</h2>
-            <p>To avail of the 20% discount, please present your Senior Citizen ID, passport, or any other valid document that proves you are at least sixty (60) years old. This discount applies to both local and foreign senior citizens.</p>
-        </div>
-    </div>
-
-    <div id="pwd-popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('pwd-popup')">&times;</span>
-            <img src="assets/images/pwd.jpg" alt="Discount 3" style="width: 100%; height: auto;">
-            <h2>PWD (Person with Disability) - 20% Discount</h2>
-            <p>To avail of the 20% discount, please present your PWD ID upon ticket purchase. Remember, no ID means no discount. This discount applies to both local and foreign PWDs. However, PWD ID is not required when the disability is apparent, such as when the passenger is an amputee.</p>
-        </div>
-    </div>
-
-    <script>
-    function togglePopup(id) {
-        document.getElementById(id).style.display = 'flex';
-    }
-
-    function closePopup(id) {
-        document.getElementById(id).style.display = 'none';
-    }
-    </script>
-
     <?php include('includes/layout-footer.php')?>
-
-    <!-- CSS for popup styling -->
-    <style>
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .popup-content {
-        background: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        width: 80%;
-        max-width: 600px;
-        max-height: 80%;
-        overflow-y: auto;
-        position: relative;
-        text-align: center;
-    }
-
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 24px;
-        cursor: pointer;
-    }
-    </style>
 </body>
 </html>
