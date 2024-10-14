@@ -110,7 +110,7 @@
     <div style="background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); padding: 20px; border-radius: 10px; color: black; width: 1500px; font-family: Arial, Helvetica, sans-serif; display: inline-block;">
         <h2 style="font-weight: bold;">About Us</h2><br><br>
         <p style="font-size: 100%">An Overview of BantayanBusBooking.com</p><br>
-        <p style="text-align: left;">Buses are a practical and affordable mode of transportation for various purposes. BantayanBusBooking.com is a user-friendly website that offers convenient access to bus schedules specifically for Bantayan Island.</p>
+        <p style="text-align: center;">Buses are a practical and affordable mode of transportation for various purposes. BantayanBusBooking.com is a user-friendly website that offers convenient access to bus schedules specifically for Bantayan Island.</p>
         <p style="text-align: left;">BantayanBusBooking.com was developed by Dianna Lyn Cena, Maria Cristine Batiancila, Jemaica Corridor, and James Vincent Pastorillo.</p>
     </div>
 </div>
