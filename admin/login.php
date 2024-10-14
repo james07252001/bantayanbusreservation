@@ -48,10 +48,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-              <a class="nav-link" href="/bantayanbus/index.php"> <i class="fa fa-home w3-large " style="color: black"> <b>Home</a></b></i>
+              <a class="nav-link" href="/bantayanbusbooking/index.php"> <i class="fa fa-home w3-large " style="color: black"> <b>Home</a></b></i>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="/bantayanbus/login.php"> <i class="fa fa-user icon w3-large " style="color: black"> <b>User</a></b></i>
+              <a class="nav-link" href="/bantayanbusbooking/login.php"> <i class="fa fa-user icon w3-large " style="color: black"> <b>User</a></b></i>
               </li>
        
     </ul>
